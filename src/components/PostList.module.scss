@@ -1,0 +1,11 @@
+.postList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.post {
+  border: 1px solid #ccc;
+  padding: 1rem;
+  border-radius: 8px;
+}
