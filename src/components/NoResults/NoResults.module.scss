@@ -1,0 +1,27 @@
+@import '../../styles/variables.scss';
+
+.noResults {
+  text-align: center;
+  color: $danger-color;
+  font-size: 1.3rem;
+  width: 100%;
+  position: absolute;
+  top: 6.5rem;
+
+  & .backBtn {
+    color: $text-color;
+    background-color: $primary-color;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s;
+    position: relative;
+    top: 1rem;
+  }
+
+  & .backBtn:hover {
+    background-color: $primary-color-hover;
+  }
+}

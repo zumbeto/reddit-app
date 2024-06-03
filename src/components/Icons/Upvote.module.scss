@@ -1,0 +1,13 @@
+@import '../../styles/variables.scss';
+
+.upvoteArrow {
+  fill: $secondary-color;
+}
+
+.upvoteArrow:hover {
+  fill: $success-color;
+}
+
+.upvoted {
+  fill: $success-color;
+}

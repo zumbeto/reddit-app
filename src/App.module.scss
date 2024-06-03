@@ -1,5 +1,8 @@
+@import './styles/variables.scss';
+
 .app {
-  padding: 1rem;
-  background-color: #202020;
-  color: #dadada;
+  background-color: $background-color;
+  color: $text-color;
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
 }

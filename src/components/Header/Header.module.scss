@@ -1,0 +1,45 @@
+@import '../../styles/variables.scss';
+
+.header {
+  padding: 0.5rem;
+  width: 100%;
+  background-color: #1f1f1f;
+  margin-bottom: 1rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-content: center;
+  gap: 1rem;
+
+  nav {
+    display: flex;
+    justify-content: left;
+    padding: 0 5rem;
+
+    & a {
+      color: #fff;
+      text-decoration: none;
+      margin-right: 1rem;
+      padding: 0.2rem;
+      background-color: $primary-color;
+      border-radius: 1.2rem;
+      transition: background-color 0.3s;
+      align-self: center;
+      display: flex;
+    }
+    & a:hover {
+      background-color: $primary-color-hover;
+    }
+
+    & img {
+      align-self: center;
+    }
+  }
+
+  h1 {
+    color: #fff;
+    font-size: $heading-1;
+    align-self: center;
+  }
+}

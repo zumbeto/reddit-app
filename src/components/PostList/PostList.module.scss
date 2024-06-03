@@ -1,0 +1,96 @@
+@import '../../styles/variables.scss';
+
+.postListWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 1rem 3rem;
+  grid-column: 2 / 4;
+
+  .postList {
+    border: 1px solid $secondary-color;
+    padding: 2rem;
+    border-radius: 8px;
+    transition: box-shadow 0.2s;
+    width: 100%;
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+
+    &:hover {
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    }
+
+    &.commentsVisible {
+      &:hover {
+        box-shadow: none;
+        scale: 1;
+      }
+    }
+
+    & button {
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+    }
+
+    & .postVotes {
+      display: flex;
+      flex-direction: column;
+
+      & .like {
+        color: $success-color;
+      }
+
+      & .dislike {
+        color: $danger-color;
+      }
+    }
+
+    & .postWrapper {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+
+      & .postTitle {
+        font-size: 1rem;
+        font-weight: 600;
+        width: 100%;
+        text-align: left;
+      }
+
+      & .postDetails {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        border-top: $secondary-color 1px solid;
+        padding-top: 0.3rem;
+
+        & .postAuthor {
+          font-size: $paragraph;
+          color: #007bff;
+        }
+
+        & .postTimeAgo {
+          color: $secondary-color;
+          font-size: $paragraph;
+          font-weight: lighter;
+        }
+
+        & button {
+          display: flex;
+          align-items: center;
+          gap: 0.3rem;
+          color: $secondary-color;
+          font-size: $paragraph;
+          font-weight: lighter;
+        }
+      }
+
+      & .postCommentsContainer {
+        width: 100%;
+        margin-top: 2rem;
+      }
+    }
+  }
+}

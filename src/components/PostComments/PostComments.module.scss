@@ -1,0 +1,46 @@
+@import '../../styles/variables.scss';
+
+.postComments {
+  list-style-type: none;
+  margin: 2rem 0;
+  padding: 0;
+  padding-left: 1rem;
+}
+
+.postComment {
+  border-top: 1px solid rgba(204, 204, 204, 0.5);
+  padding: 1rem 0;
+  transition: box-shadow 0.2s;
+  margin-top: 1rem;
+
+  &:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  }
+
+  & .postAuthor {
+    font-weight: 600;
+    color: $primary-color;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1rem 1rem 1rem;
+    text-decoration: underline;
+    text-underline-offset: 0.3rem;
+    text-decoration-color: $secondary-color;
+
+    & span {
+      font-weight: 400;
+      color: $secondary-color;
+      margin-left: 1rem;
+    }
+  }
+
+  & .commentBody {
+    padding: 0 1rem;
+  }
+}
+
+.loading {
+  text-align: left;
+  margin: 1rem 0;
+  color: $secondary-color;
+}
