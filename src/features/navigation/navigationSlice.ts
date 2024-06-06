@@ -5,6 +5,7 @@ import { NavigationState } from './types';
 const initialState: NavigationState = {
   query: '',
   shouldNavigate: false,
+  subreddit: '',
 };
 
 const navigationSlice = createSlice({
@@ -21,12 +22,16 @@ const navigationSlice = createSlice({
     resetNavigation(state) {
       state.shouldNavigate = false;
     },
+    setSubreddit(state, action: PayloadAction<string>) {
+      state.subreddit = action.payload;
+    },
   },
 });
 
-export const { setQuery, clearQuery, resetNavigation } = navigationSlice.actions;
+export const { setQuery, clearQuery, resetNavigation, setSubreddit } = navigationSlice.actions;
 
 export const selectQuery = (state: RootState) => state.navigation.query;
 export const selectShouldNavigate = (state: RootState) => state.navigation.shouldNavigate;
+export const selectSubreddit = (state: RootState) => state.navigation.subreddit;
 
 export default navigationSlice.reducer;

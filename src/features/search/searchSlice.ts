@@ -3,6 +3,9 @@ import { SearchState } from './types';
 
 const initialState: SearchState = {
   query: '',
+  status: 'idle',
+  items: [],
+  error: null,
 };
 
 const searchSlice = createSlice({

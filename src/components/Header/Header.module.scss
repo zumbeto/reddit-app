@@ -1,11 +1,13 @@
 @import '../../styles/variables.scss';
 
 .header {
+  font-family: $font-family;
   padding: 0.5rem;
   width: 100%;
-  background-color: #1f1f1f;
+  background-color: $background-color-2;
   margin-bottom: 1rem;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid $dark-color;
   display: grid;
   grid-column: 1 / -1;
   grid-template-columns: 1fr 1fr 1fr;

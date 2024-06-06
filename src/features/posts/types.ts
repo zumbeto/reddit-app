@@ -5,6 +5,10 @@ export interface Post {
   created_utc: number;
   ups: number;
   downs: number;
+  thumbnail: string;
+  url: string;
+  preview?: { images: { source: { url: string }; resolutions: { url: string; width: number; height: number }[] }[] };
+  num_comments: number;
 }
 
 export interface Comment {
@@ -18,7 +22,7 @@ export interface PostsState {
   items: Post[];
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
-  comments: { [postId: string]: Comment[] }; // Add comments to the state
+  comments: { [postId: string]: Comment[] };
 }
 
 export interface VoteStatus {

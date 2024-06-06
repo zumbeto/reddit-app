@@ -20,6 +20,29 @@ export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
         created_utc: child.data.created_utc,
         ups: child.data.ups,
         downs: child.data.downs,
+        thumbnail: child.data.thumbnail,
+        url: child.data.url,
+        preview: child.data.preview,
+        num_comments: child.data.num_comments,
+      } as Post)
+  );
+});
+
+export const fetchSubredditPosts = createAsyncThunk('posts/fetchSubredditPosts', async (subreddit: string) => {
+  const response = await axios.get(`https://www.reddit.com/r/${subreddit}.json`);
+  return response.data.data.children.map(
+    (child: any) =>
+      ({
+        id: child.data.id,
+        title: child.data.title,
+        author: child.data.author,
+        created_utc: child.data.created_utc,
+        ups: child.data.ups,
+        downs: child.data.downs,
+        thumbnail: child.data.thumbnail,
+        url: child.data.url,
+        preview: child.data.preview,
+        num_comments: child.data.num_comments,
       } as Post)
   );
 });
@@ -82,6 +105,17 @@ const postsSlice = createSlice({
         state.items = action.payload;
       })
       .addCase(fetchPosts.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message || 'Unknown error';
+      })
+      .addCase(fetchSubredditPosts.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchSubredditPosts.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.items = action.payload;
+      })
+      .addCase(fetchSubredditPosts.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message || 'Unknown error';
       })
