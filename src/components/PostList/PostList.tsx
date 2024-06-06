@@ -1,32 +1,39 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { fetchPosts, upvote, downvote } from '../../features/posts/postsSlice';
+import { fetchPosts, fetchSubredditPosts, upvote, downvote } from '../../features/posts/postsSlice';
 import { RootState, useAppDispatch } from '../../store';
 import { VoteStatus } from '../../features/posts/types';
 import { timeAgo } from '../../utils/timeAgo';
-import { formatVotes } from '../../utils/formatVotes';
+import { formatNumbers } from '../../utils/formatNumbers';
 import UpvoteArrow from '../Icons/Upvote';
 import DownvoteArrow from '../Icons/Downvote';
 import Comments from '../PostComments/PostComments';
 import CommentsIcon from '../Icons/CommentsIcon';
 import NoResults from '../NoResults/NoResults';
 import styles from './PostList.module.scss';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { selectQuery, selectShouldNavigate, resetNavigation } from '../../features/navigation/navigationSlice';
 
 const PostList = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { subreddit } = useParams<{ subreddit: string }>();
   const posts = useSelector((state: RootState) => state.posts.items);
-  const comments = useSelector((state: RootState) => state.posts.comments);
   const query = useSelector(selectQuery);
   const shouldNavigate = useSelector(selectShouldNavigate);
   const [voteStatus, setVoteStatus] = useState<VoteStatus>({});
   const [visibleComments, setVisibleComments] = useState<{ [key: string]: boolean }>({});
 
   useEffect(() => {
-    dispatch(fetchPosts());
-  }, [dispatch]);
+    console.log('Subreddit parameter:', subreddit);
+    if (subreddit) {
+      console.log('Fetching posts for subreddit:', subreddit);
+      dispatch(fetchSubredditPosts(subreddit));
+    } else {
+      console.log('Fetching popular posts');
+      dispatch(fetchPosts());
+    }
+  }, [dispatch, subreddit]);
 
   useEffect(() => {
     if (shouldNavigate && posts.length === 0 && query !== '') {
@@ -73,47 +80,64 @@ const PostList = () => {
   }
 
   return (
-    <div className={styles.postListWrapper}>
-      {posts.map((post) => (
-        <div
-          key={post.id}
-          className={`${styles.postList} ${visibleComments[post.id] ? styles.commentsVisible : ''}`}
-        >
-          <div className={styles.postVotes}>
-            <button onClick={() => handleUpvote(post.id)}>
-              <UpvoteArrow status={voteStatus[post.id]} />
-            </button>
-            <p
-              className={
-                voteStatus[post.id] === 'upvoted'
-                  ? styles.like
-                  : voteStatus[post.id] === 'downvoted'
-                  ? styles.dislike
-                  : ''
-              }
+    <div className={styles.container}>
+      {posts.length === 0 ? (
+        <p>No posts available.</p>
+      ) : (
+        posts.map((post) => {
+          const imageUrl = post.preview?.images[0]?.source?.url.replace('&amp;', '&');
+          return (
+            <div
+              key={post.id}
+              className={`${styles.post} ${visibleComments[post.id] ? styles.commentsVisible : ''}`}
             >
-              {formatVotes(post.ups - post.downs)}
-            </p>
-            <button onClick={() => handleDownvote(post.id)}>
-              <DownvoteArrow status={voteStatus[post.id]} />
-            </button>
-          </div>
-          <div className={styles.postWrapper}>
-            <div className={styles.postTitle}>
-              <h2>{post.title}</h2>
+              <div className={styles.post__votes}>
+                <button onClick={() => handleUpvote(post.id)}>
+                  <UpvoteArrow status={voteStatus[post.id]} />
+                </button>
+                <p
+                  className={
+                    voteStatus[post.id] === 'upvoted'
+                      ? styles.like
+                      : voteStatus[post.id] === 'downvoted'
+                      ? styles.dislike
+                      : ''
+                  }
+                >
+                  {formatNumbers(post.ups - post.downs)}
+                </p>
+                <button onClick={() => handleDownvote(post.id)}>
+                  <DownvoteArrow status={voteStatus[post.id]} />
+                </button>
+              </div>
+              <div className={styles.post__wrapper}>
+                <div className={styles.post__wrapper__title}>
+                  <h2>{post.title}</h2>
+                </div>
+                {imageUrl && (
+                  <div className={styles.post__wrapper__imageContainer}>
+                    <img
+                      src={imageUrl}
+                      alt={post.title}
+                      className={styles.post__wrapper__imageContainer__image}
+                    />
+                  </div>
+                )}
+                <div className={styles.post__wrapper__details}>
+                  <p className={styles.post__wrapper__details__author}>{post.author}</p>
+                  <p className={styles.post__wrapper__details__timeAgo}>{timeAgo(post.created_utc)}</p>
+                  <button onClick={() => toggleComments(post.id)}>
+                    <CommentsIcon />
+                    <span>{formatNumbers(post.num_comments)}</span>
+                  </button>
+                </div>
+
+                <div className={styles.postComments}>{visibleComments[post.id] && <Comments postId={post.id} />}</div>
+              </div>
             </div>
-            <div className={styles.postDetails}>
-              <p className={styles.postAuthor}>{post.author}</p>
-              <p className={styles.postTimeAgo}>{timeAgo(post.created_utc)}</p>
-              <button onClick={() => toggleComments(post.id)}>
-                <CommentsIcon />
-                <span>{comments[post.id]?.length || 0}</span>
-              </button>
-            </div>
-            <div className={styles.postComments}>{visibleComments[post.id] && <Comments postId={post.id} />}</div>
-          </div>
-        </div>
-      ))}
+          );
+        })
+      )}
     </div>
   );
 };
