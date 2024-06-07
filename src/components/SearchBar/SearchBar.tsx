@@ -1,19 +1,17 @@
-import { useState } from 'react';
 import { useAppDispatch } from '../../store';
 import { searchPosts } from '../../features/posts/postsSlice';
 import { setQuery } from '../../features/navigation/navigationSlice';
 import styles from './SearchBar.module.scss';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
 
 const SearchBar = () => {
-  const [localQuery, setLocalQuery] = useState('');
+  const localQuery = useSelector((state: RootState) => state.navigation.query);
   const dispatch = useAppDispatch();
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    if (localQuery.trim() === '') {
-      alert('Please enter a search query');
-      return;
-    }
+
     dispatch(setQuery(localQuery));
     dispatch(searchPosts(localQuery));
   };
@@ -27,7 +25,7 @@ const SearchBar = () => {
         <input
           type='text'
           value={localQuery}
-          onChange={(e) => setLocalQuery(e.target.value)}
+          onChange={(e) => dispatch(setQuery(e.target.value))}
           className={styles.input}
           placeholder='Search posts...'
         />
