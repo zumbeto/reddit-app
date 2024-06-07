@@ -25,12 +25,9 @@ const PostList = () => {
   const [visibleComments, setVisibleComments] = useState<{ [key: string]: boolean }>({});
 
   useEffect(() => {
-    console.log('Subreddit parameter:', subreddit);
     if (subreddit) {
-      console.log('Fetching posts for subreddit:', subreddit);
       dispatch(fetchSubredditPosts(subreddit));
     } else {
-      console.log('Fetching popular posts');
       dispatch(fetchPosts());
     }
   }, [dispatch, subreddit]);

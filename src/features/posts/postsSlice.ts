@@ -58,6 +58,10 @@ export const searchPosts = createAsyncThunk('posts/searchPosts', async (query: s
         created_utc: child.data.created_utc,
         ups: child.data.ups,
         downs: child.data.downs,
+        thumbnail: child.data.thumbnail,
+        url: child.data.url,
+        preview: child.data.preview,
+        num_comments: child.data.num_comments,
       } as Post)
   );
 });
