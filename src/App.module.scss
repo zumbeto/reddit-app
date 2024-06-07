@@ -1,3 +1,4 @@
+@use './styles/mixins' as m;
 @import './styles/variables.scss';
 
 .app {
@@ -5,4 +6,10 @@
   color: $text-color;
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
+
+  @include m.breakpoint-max('md') {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
 }

@@ -1,9 +1,30 @@
+@use '../../styles/mixins' as m;
 @import '../../styles/variables.scss';
 
 .searchBarWrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 90%;
+  grid-column: 2 / 4;
+
+  @include m.breakpoint('md') {
+    width: 100%;
+  }
+
+  @include m.breakpoint('lg') {
+    width: 50%;
+    padding: 0 5rem;
+  }
+
+  @include m.breakpoint('xl') {
+    width: 80%;
+    padding: 0;
+  }
+
+  @include m.breakpoint('xxl') {
+    width: 60%;
+  }
 }
 
 .searchBar {
@@ -13,6 +34,27 @@
   margin-top: 1rem;
   width: 65%;
   justify-content: right;
+
+  @include m.breakpoint-max('xl') {
+    width: 100%;
+  }
+
+  @include m.breakpoint-max('lg') {
+    width: 80%;
+  }
+
+  @include m.breakpoint-max('md') {
+    width: 100%;
+    gap: 1rem;
+    padding: 0 2rem;
+  }
+
+  @include m.breakpoint-max('sm') {
+    width: 100%;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 0;
+  }
 }
 
 .input {
@@ -23,6 +65,10 @@
   background-color: $dark-color;
   color: $text-color;
   transition: background-color 0.3s;
+
+  @include m.breakpoint-max('lg') {
+    width: 100%;
+  }
 
   &:focus {
     outline: none;
@@ -36,17 +82,25 @@
 
   &::placeholder {
     color: $dark-text-color;
+
+    @include m.breakpoint-max('sm') {
+      text-align: center;
+    }
   }
 }
 
 .button {
-  padding: 0.9rem;
+  padding: 0.5rem 1.2rem;
   border: none;
   background-color: $primary-color;
   color: #fff;
-  border-radius: 3rem;
+  border-radius: 2rem;
   cursor: pointer;
   transition: background-color 0.3s;
+
+  @include m.breakpoint-max('sm') {
+    align-self: center;
+  }
 
   &:hover {
     background-color: #0056b3;
