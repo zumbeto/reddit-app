@@ -1,3 +1,4 @@
+@use '../../styles/mixins' as m;
 @import '../../styles/variables.scss';
 
 .noResults {
@@ -7,6 +8,10 @@
   width: 100%;
   position: absolute;
   top: 6.5rem;
+
+  @include m.breakpoint-max('sm') {
+    top: 30rem;
+  }
 
   & .backBtn {
     color: $text-color;
