@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { RootState } from '../../store';
 import styles from './SideBar.module.scss';
-import fallbackImg from '../../assets/icons/no-image.png';
+import fallbackImg from '../../assets/images/no-image.png';
 
 const SideBar = () => {
   const dispatch = useAppDispatch();
