@@ -1,11 +1,18 @@
+@use '../../styles/mixins.scss' as m;
 @import '../../styles/variables.scss';
 
 .downvoteArrow {
   fill: $secondary-color;
-}
 
-.downvoteArrow:hover {
-  fill: $danger-color;
+  &:hover {
+    fill: $danger-color;
+  }
+
+  @include m.breakpoint-max('sm') {
+    &:hover {
+      fill: $secondary-color;
+    }
+  }
 }
 
 .downvoted {
