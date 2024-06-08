@@ -1,11 +1,18 @@
+@use '../../styles/mixins.scss' as m;
 @import '../../styles/variables.scss';
 
 .upvoteArrow {
   fill: $secondary-color;
-}
 
-.upvoteArrow:hover {
-  fill: $success-color;
+  &:hover {
+    fill: $success-color;
+  }
+
+  @include m.breakpoint-max('sm') {
+    &:hover {
+      fill: $secondary-color;
+    }
+  }
 }
 
 .upvoted {
