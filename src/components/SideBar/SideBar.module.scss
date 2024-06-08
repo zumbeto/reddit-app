@@ -13,7 +13,6 @@
   padding-left: 1rem;
 
   @include m.breakpoint-max('sm') {
-    grid-column: 1 / 4;
     margin: 0;
     padding: 0;
   }
