@@ -1,3 +1,4 @@
+@use '../../styles/mixins.scss' as m;
 @import '../../styles/variables.scss';
 
 .postComments {
@@ -36,6 +37,14 @@
 
   & .commentBody {
     padding: 0 1rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
+
+    @include m.breakpoint-max('sm') {
+      padding: 0;
+    }
   }
 }
 
