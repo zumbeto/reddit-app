@@ -1,4 +1,4 @@
-# Reddit App
+# RedditXplore
 
 ![previews](public/redditxplore-responsive.png)
 
@@ -19,7 +19,7 @@
 
 ## General Info
 
-The RedditXplore App is an intuitive web application that allows users to browse and search for posts from various subreddits. Users can view comments, like and dislike posts, and search for specific topics. This app was created as a portfolio project as part of Codecademy's Full Stack Engineer course.
+RedditXplore is an intuitive web application that allows users to browse and search for posts from various subreddits. Users can view comments, like and dislike posts, and search for specific topics. This app was created as a portfolio project as part of Codecademy's Full Stack Engineer course.
 
 ## Live Version
 
