@@ -14,12 +14,10 @@
   grid-template-columns: 1fr 1fr 1fr;
   align-content: center;
   gap: 1rem;
-
-  @include m.breakpoint-max('xl') {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-  }
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
 
   @include m.breakpoint-max('sm') {
     display: flex;
@@ -74,5 +72,8 @@
     color: #fff;
     font-size: $heading-1;
     align-self: center;
+    @include m.breakpoint-max('sm') {
+      display: none;
+    }
   }
 }

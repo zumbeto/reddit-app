@@ -1,0 +1,50 @@
+@use './mixins.scss' as m;
+
+@keyframes blip {
+  0% {
+    stroke-width: 0;
+    opacity: 0;
+  }
+  50% {
+    stroke-width: 30;
+    opacity: 1;
+  }
+  100% {
+    stroke-width: 0;
+    opacity: 0;
+  }
+}
+
+@include m.breakpoint-max('md') {
+  @keyframes blip {
+    0% {
+      stroke-width: 0;
+      opacity: 0;
+    }
+    50% {
+      stroke-width: 20;
+      opacity: 1;
+    }
+    100% {
+      stroke-width: 0;
+      opacity: 0;
+    }
+  }
+}
+
+@include m.breakpoint-max('sm') {
+  @keyframes blip {
+    0% {
+      stroke-width: 0;
+      opacity: 0;
+    }
+    50% {
+      stroke-width: 10;
+      opacity: 1;
+    }
+    100% {
+      stroke-width: 0;
+      opacity: 0;
+    }
+  }
+}
