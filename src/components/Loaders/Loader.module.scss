@@ -1,0 +1,118 @@
+@use '../../styles/mixins.scss' as m;
+@import '../../styles/animations.scss';
+@import '../../styles/variables.scss';
+
+.loader {
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  position: relative;
+
+  &__inner {
+    position: fixed;
+    top: 55%;
+    left: 55%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 5rem;
+
+    @include m.breakpoint('sm') {
+      top: 40%;
+      left: 52%;
+    }
+
+    @include m.breakpoint('md') {
+      left: 73%;
+      top: 30%;
+    }
+
+    @include m.breakpoint('lg') {
+      top: 40%;
+      left: 67%;
+    }
+
+    @include m.breakpoint('mlg') {
+      top: 30%;
+    }
+
+    @include m.breakpoint('xl') {
+      left: 61%;
+    }
+
+    @include m.breakpoint('xxl') {
+      left: 57%;
+    }
+  }
+
+  &__led {
+    fill: none;
+    stroke: $primary-color;
+    opacity: 0;
+  }
+  &__one {
+    animation: blip 0.5s ease-in-out 0s infinite alternate;
+  }
+  &__two {
+    animation: blip 0.5s ease-in-out 0.1s infinite alternate;
+  }
+  &__three {
+    animation: blip 0.5s ease-in-out 0.2s infinite alternate;
+  }
+  &__four {
+    animation: blip 0.5s ease-in-out 0.3s infinite alternate;
+  }
+}
+
+.sidebar__loader {
+  @include m.breakpoint-max('md') {
+    display: none;
+  }
+
+  & .loader__inner {
+    position: fixed;
+    top: 25%;
+    left: 13%;
+    transform: translate(-50%, -50%);
+
+    @include m.breakpoint('md') {
+      top: 30%;
+      left: 23%;
+    }
+
+    @include m.breakpoint('lg') {
+      top: 40%;
+      left: 18%;
+    }
+
+    @include m.breakpoint('mlg') {
+      left: 15%;
+    }
+
+    @include m.breakpoint('xl') {
+      left: 12%;
+    }
+
+    @include m.breakpoint('xxl') {
+      left: 8.5%;
+    }
+  }
+}
+
+.comments__loader {
+  & .loader__inner {
+    position: absolute;
+    top: 5%;
+    left: 52%;
+    transform: translate(-50%, -50%);
+
+    @include m.breakpoint-max('md') {
+      margin-right: 4rem;
+    }
+
+    @include m.breakpoint-max('sm') {
+      margin-right: 2rem;
+    }
+  }
+}

@@ -5,7 +5,7 @@
   background-color: $background-color-2;
   color: $text-color;
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-columns: minmax(20rem, 25rem) 1fr;
 
   @include m.breakpoint-max('md') {
     display: flex;

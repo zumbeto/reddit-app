@@ -18,6 +18,12 @@
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
   }
 
+  @include m.breakpoint-max('sm') {
+    &:hover {
+      box-shadow: none;
+    }
+  }
+
   & .postAuthor {
     font-weight: 600;
     color: $primary-color;

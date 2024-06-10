@@ -13,12 +13,14 @@ import NoResults from '../NoResults/NoResults';
 import styles from './PostList.module.scss';
 import { useNavigate, useParams } from 'react-router-dom';
 import { selectQuery, selectShouldNavigate, resetNavigation } from '../../features/navigation/navigationSlice';
+import Loader from '../Loaders/Loader';
 
 const PostList = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { subreddit } = useParams<{ subreddit: string }>();
   const posts = useSelector((state: RootState) => state.posts.items);
+  const status = useSelector((state: RootState) => state.posts.status);
   const query = useSelector(selectQuery);
   const shouldNavigate = useSelector(selectShouldNavigate);
   const [voteStatus, setVoteStatus] = useState<VoteStatus>({});
@@ -78,8 +80,8 @@ const PostList = () => {
 
   return (
     <div className={styles.container}>
-      {posts.length === 0 ? (
-        <p>No posts available.</p>
+      {status === 'loading' ? (
+        <Loader component={PostList} />
       ) : (
         posts.map((post) => {
           const imageUrl = post.preview?.images[0]?.source?.url.replace('&amp;', '&');
