@@ -13,4 +13,8 @@
     flex-direction: column;
     gap: 1rem;
   }
+
+  @include m.breakpoint-max('sm') {
+    overflow: hidden;
+  }
 }
