@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { fetchSubreddits } from '../../features/subreddits/subredditsSlice';
 import { useAppDispatch } from '../../store';
 import { useSelector } from 'react-redux';
@@ -12,10 +12,16 @@ const SideBar = () => {
   const dispatch = useAppDispatch();
   const subreddits = useSelector((state: RootState) => state.subreddits.items);
   const status = useSelector((state: RootState) => state.subreddits.status);
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(fetchSubreddits());
   }, [dispatch]);
+
+  const handleSubredditClick = (subreddit: string) => {
+    navigate(`/r/${subreddit}`);
+    window.scrollTo(0, 0);
+  };
 
   return (
     <aside className={styles.sideBar}>
@@ -29,6 +35,7 @@ const SideBar = () => {
               <NavLink
                 to={`/r/${subreddit.title}`}
                 className={({ isActive }) => (isActive ? styles.active : '')}
+                onClick={() => handleSubredditClick(subreddit.title)}
               >
                 <img
                   src={subreddit.icon_img || fallbackImg}

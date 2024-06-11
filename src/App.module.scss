@@ -6,6 +6,7 @@
   color: $text-color;
   display: grid;
   grid-template-columns: minmax(20rem, 25rem) 1fr;
+  min-height: 100vh;
 
   @include m.breakpoint-max('md') {
     display: flex;

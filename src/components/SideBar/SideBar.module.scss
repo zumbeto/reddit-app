@@ -13,6 +13,7 @@
   overflow-y: auto;
   height: calc(100vh - 7rem);
   border-right: 1px solid $dark-color;
+  z-index: 102;
 
   &::-webkit-scrollbar {
     width: 8px;
@@ -23,7 +24,6 @@
   }
 
   &::-webkit-scrollbar-thumb {
-    // background-color: $dark-color;
     background-color: transparent;
     border-radius: 4px;
   }
@@ -41,12 +41,8 @@
     width: 100%;
     min-width: 100%;
     max-width: 100%;
-    position: relative;
-    top: 7rem;
-  }
-
-  @include m.breakpoint-max('sm') {
-    top: 11rem;
+    position: fixed;
+    top: 5rem;
   }
 
   &__heading {
@@ -100,7 +96,8 @@
       border-top: 1px solid $dark-color;
 
       @include m.breakpoint-max('md') {
-        border-top: none;
+        margin-top: 0.5rem;
+        border-bottom: 1px solid $dark-color;
       }
     }
 
@@ -114,6 +111,10 @@
       cursor: pointer;
       transition: background-color 0.3s;
 
+      @include m.breakpoint-max('md') {
+        padding: 0.2rem;
+      }
+
       & a {
         display: flex;
         align-items: center;
@@ -122,6 +123,10 @@
         border-radius: 1rem;
         width: 100%;
         border-left: 0.25rem solid transparent;
+
+        @include m.breakpoint-max('md') {
+          padding: 0.4rem;
+        }
 
         &:hover {
           background-color: $darker-hover-color;

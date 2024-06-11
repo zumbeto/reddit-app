@@ -4,6 +4,7 @@ import { setQuery } from '../../features/navigation/navigationSlice';
 import styles from './SearchBar.module.scss';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
+import SearchIcon from '../Icons/SearchIcon';
 
 const SearchBar = () => {
   const localQuery = useSelector((state: RootState) => state.navigation.query);
@@ -14,28 +15,32 @@ const SearchBar = () => {
 
     dispatch(setQuery(localQuery));
     dispatch(searchPosts(localQuery));
+    window.scrollTo(0, 0);
   };
 
   return (
-    <div className={styles.searchBarWrapper}>
+    <div className={styles.searchBar}>
       <form
         onSubmit={handleSearch}
-        className={styles.searchBar}
+        className={styles.searchBar__form}
       >
-        <input
-          type='text'
-          value={localQuery}
-          onChange={(e) => dispatch(setQuery(e.target.value))}
-          className={styles.input}
-          placeholder='Search posts...'
-        />
-        <button
-          type='submit'
-          className={styles.button}
-          disabled={localQuery.trim() === ''}
-        >
-          Search
-        </button>
+        <div className={styles.searchBar__form__inputContainer}>
+          <input
+            type='text'
+            id='search'
+            value={localQuery}
+            onChange={(e) => dispatch(setQuery(e.target.value))}
+            className={styles.searchBar__form__inputContainer__input}
+            placeholder='Search Reddit'
+          />
+          <button
+            type='submit'
+            className={styles.searchBar__form__inputContainer__button}
+            disabled={localQuery.trim() === ''}
+          >
+            <SearchIcon />
+          </button>
+        </div>
       </form>
     </div>
   );

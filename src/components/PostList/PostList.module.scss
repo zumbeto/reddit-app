@@ -9,8 +9,12 @@
   gap: 1.5rem;
   position: relative;
 
+  @include m.breakpoint-max('md') {
+    top: 6rem;
+  }
+
   @include m.breakpoint-max('sm') {
-    top: 11rem;
+    top: 14rem;
     margin: 0 auto;
   }
 
@@ -95,15 +99,18 @@
       }
 
       &__imageContainer {
-        width: 80%;
-        height: 40rem;
+        width: 90%;
+        height: 35rem;
         display: flex;
         justify-content: center;
-        margin: 1rem 1.5rem;
+        margin: 1rem auto;
+
+        @include m.breakpoint-max('xl') {
+          height: 30rem;
+        }
 
         @include m.breakpoint-max('sm') {
           height: auto;
-          margin: 1rem auto;
         }
 
         &__image {
