@@ -24,6 +24,7 @@ export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
         url: child.data.url,
         preview: child.data.preview,
         num_comments: child.data.num_comments,
+        media: child.data.media,
       } as Post)
   );
 });
@@ -43,6 +44,7 @@ export const fetchSubredditPosts = createAsyncThunk('posts/fetchSubredditPosts',
         url: child.data.url,
         preview: child.data.preview,
         num_comments: child.data.num_comments,
+        media: child.data.media,
       } as Post)
   );
 });
@@ -62,6 +64,7 @@ export const searchPosts = createAsyncThunk('posts/searchPosts', async (query: s
         url: child.data.url,
         preview: child.data.preview,
         num_comments: child.data.num_comments,
+        media: child.data.media,
       } as Post)
   );
 });

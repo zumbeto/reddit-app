@@ -98,7 +98,8 @@
         }
       }
 
-      &__imageContainer {
+      &__imageContainer,
+      &__videoContainer {
         width: 90%;
         height: 35rem;
         display: flex;
@@ -113,7 +114,8 @@
           height: auto;
         }
 
-        &__image {
+        &__image,
+        & video {
           display: block;
           width: 100%;
           max-width: 100%;

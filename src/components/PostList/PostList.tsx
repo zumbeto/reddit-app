@@ -87,6 +87,7 @@ const PostList = () => {
       ) : (
         posts.map((post) => {
           const imageUrl = post.preview?.images[0]?.source?.url.replace('&amp;', '&');
+          const videoUrl = post.media?.reddit_video?.fallback_url;
           return (
             <div
               key={post.id}
@@ -115,13 +116,27 @@ const PostList = () => {
                 <div className={styles.post__wrapper__title}>
                   <h2>{post.title}</h2>
                 </div>
-                {imageUrl && (
+                {imageUrl && !videoUrl && (
                   <div className={styles.post__wrapper__imageContainer}>
                     <img
                       src={imageUrl}
                       alt={post.title}
                       className={styles.post__wrapper__imageContainer__image}
                     />
+                  </div>
+                )}
+                {videoUrl && (
+                  <div className={styles.post__wrapper__videoContainer}>
+                    <video
+                      controls
+                      preload='auto'
+                    >
+                      <source
+                        src={videoUrl}
+                        type='video/mp4'
+                      />
+                      Your browser does not support the video tag.
+                    </video>
                   </div>
                 )}
                 <div className={styles.post__wrapper__details}>
