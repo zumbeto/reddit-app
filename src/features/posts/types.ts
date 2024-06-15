@@ -10,6 +10,7 @@ export interface Post {
   preview?: { images: { source: { url: string }; resolutions: { url: string; width: number; height: number }[] }[] };
   num_comments: number;
   media?: { reddit_video?: { fallback_url: string; height: number; width: number; dash_url: string } };
+  subreddit: string;
 }
 
 export interface Comment {
@@ -17,6 +18,7 @@ export interface Comment {
   author: string;
   body: string;
   created_utc: number;
+  comments: Comment[];
 }
 
 export interface PostsState {
@@ -24,6 +26,7 @@ export interface PostsState {
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
   comments: { [postId: string]: Comment[] };
+  voteStatus: { [postId: string]: 'upvoted' | 'downvoted' | null };
 }
 
 export interface VoteStatus {
@@ -32,4 +35,9 @@ export interface VoteStatus {
 
 export interface CommentsProps {
   postId: string;
+}
+
+export interface PostDetailsProps {
+  post: Post;
+  comments?: Comment[];
 }

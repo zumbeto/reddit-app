@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PostList from './components/PostList/PostList';
 import NoResults from './components/NoResults/NoResults';
+import PostDetailsPage from './components/PostDetails/PostDetailsPage';
 import styles from './App.module.scss';
 import Root from './components/Root/Root';
 
@@ -24,6 +25,10 @@ const App = () => {
             <Route
               path='r/:subreddit'
               element={<PostList />}
+            />
+            <Route
+              path='r/:subreddit/post/:postId'
+              element={<PostDetailsPage />}
             />
           </Route>
         </Routes>

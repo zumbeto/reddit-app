@@ -2,7 +2,12 @@ import SideBar from '../SideBar/SideBar';
 import Comments from '../PostComments/PostComments';
 import styles from './Loader.module.scss';
 
-const Loader = ({ component }: { component: React.ComponentType }) => {
+interface LoaderProps {
+  component: React.ComponentType<any>;
+  [key: string]: any;
+}
+
+const Loader = ({ component }: LoaderProps) => {
   return (
     <div
       className={`${styles.loader} ${component === SideBar ? styles.sidebar__loader : ''} ${

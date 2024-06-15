@@ -1,159 +1,41 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { fetchPosts, fetchSubredditPosts, upvote, downvote } from '../../features/posts/postsSlice';
+import { fetchPosts, fetchSubredditPosts } from '../../features/posts/postsSlice';
 import { RootState, useAppDispatch } from '../../store';
-import { VoteStatus } from '../../features/posts/types';
-import { timeAgo } from '../../utils/timeAgo';
-import { formatNumbers } from '../../utils/formatNumbers';
-import UpvoteArrow from '../Icons/Upvote';
-import DownvoteArrow from '../Icons/Downvote';
-import Comments from '../PostComments/PostComments';
-import CommentsIcon from '../Icons/CommentsIcon';
-import NoResults from '../NoResults/NoResults';
-import styles from './PostList.module.scss';
-import { useNavigate, useParams } from 'react-router-dom';
-import { selectQuery, selectShouldNavigate, resetNavigation } from '../../features/navigation/navigationSlice';
+import PostDetails from '../PostDetails/PostDetails';
 import Loader from '../Loaders/Loader';
+import NoResults from '../NoResults/NoResults';
+import { useParams } from 'react-router-dom';
 
 const PostList = () => {
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const { subreddit } = useParams<{ subreddit: string }>();
+  const dispatch = useAppDispatch();
   const posts = useSelector((state: RootState) => state.posts.items);
   const status = useSelector((state: RootState) => state.posts.status);
-  const query = useSelector(selectQuery);
-  const shouldNavigate = useSelector(selectShouldNavigate);
-  const [voteStatus, setVoteStatus] = useState<VoteStatus>({});
-  const [visibleComments, setVisibleComments] = useState<{ [key: string]: boolean }>({});
 
   useEffect(() => {
     if (subreddit) {
       dispatch(fetchSubredditPosts(subreddit));
-    } else {
+    } else if (posts.length === 0) {
       dispatch(fetchPosts());
     }
+  }, [dispatch, posts.length, subreddit]);
 
-    window.scrollTo(0, 0);
-  }, [dispatch, subreddit]);
+  if (status === 'loading') {
+    return <Loader component={PostList} />;
+  }
 
-  useEffect(() => {
-    if (shouldNavigate && posts.length === 0 && query !== '') {
-      navigate('/no-results', { replace: true });
-      dispatch(resetNavigation());
-    }
-  }, [shouldNavigate, posts, query, navigate, dispatch]);
-
-  const handleUpvote = (postId: string) => {
-    if (voteStatus[postId] === 'upvoted') {
-      dispatch(downvote(postId));
-      setVoteStatus((prevStatus) => ({ ...prevStatus, [postId]: null }));
-    } else {
-      if (voteStatus[postId] === 'downvoted') {
-        dispatch(upvote(postId));
-      }
-      dispatch(upvote(postId));
-      setVoteStatus((prevStatus) => ({ ...prevStatus, [postId]: 'upvoted' }));
-    }
-  };
-
-  const handleDownvote = (postId: string) => {
-    if (voteStatus[postId] === 'downvoted') {
-      dispatch(upvote(postId));
-      setVoteStatus((prevStatus) => ({ ...prevStatus, [postId]: null }));
-    } else {
-      if (voteStatus[postId] === 'upvoted') {
-        dispatch(downvote(postId));
-      }
-      dispatch(downvote(postId));
-      setVoteStatus((prevStatus) => ({ ...prevStatus, [postId]: 'downvoted' }));
-    }
-  };
-
-  const toggleComments = (postId: string) => {
-    setVisibleComments((prevState) => ({
-      ...prevState,
-      [postId]: !prevState[postId],
-    }));
-  };
-
-  if (posts.length === 0 && query !== '') {
+  if (posts.length === 0 && status === 'succeeded') {
     return <NoResults />;
   }
 
   return (
-    <div className={styles.container}>
-      {status === 'loading' ? (
-        <Loader component={PostList} />
-      ) : (
-        posts.map((post) => {
-          const imageUrl = post.preview?.images[0]?.source?.url.replace('&amp;', '&');
-          const videoUrl = post.media?.reddit_video?.fallback_url;
-          return (
-            <div
-              key={post.id}
-              className={`${styles.post} ${visibleComments[post.id] ? styles.commentsVisible : ''}`}
-            >
-              <div className={styles.post__votes}>
-                <button onClick={() => handleUpvote(post.id)}>
-                  <UpvoteArrow status={voteStatus[post.id]} />
-                </button>
-                <p
-                  className={
-                    voteStatus[post.id] === 'upvoted'
-                      ? styles.like
-                      : voteStatus[post.id] === 'downvoted'
-                      ? styles.dislike
-                      : ''
-                  }
-                >
-                  {formatNumbers(post.ups - post.downs)}
-                </p>
-                <button onClick={() => handleDownvote(post.id)}>
-                  <DownvoteArrow status={voteStatus[post.id]} />
-                </button>
-              </div>
-              <div className={styles.post__wrapper}>
-                <div className={styles.post__wrapper__title}>
-                  <h2>{post.title}</h2>
-                </div>
-                {imageUrl && !videoUrl && (
-                  <div className={styles.post__wrapper__imageContainer}>
-                    <img
-                      src={imageUrl}
-                      alt={post.title}
-                      className={styles.post__wrapper__imageContainer__image}
-                    />
-                  </div>
-                )}
-                {videoUrl && (
-                  <div className={styles.post__wrapper__videoContainer}>
-                    <video
-                      controls
-                      preload='auto'
-                    >
-                      <source
-                        src={videoUrl}
-                        type='video/mp4'
-                      />
-                      Your browser does not support the video tag.
-                    </video>
-                  </div>
-                )}
-                <div className={styles.post__wrapper__details}>
-                  <p className={styles.post__wrapper__details__author}>{post.author}</p>
-                  <p className={styles.post__wrapper__details__timeAgo}>{timeAgo(post.created_utc)}</p>
-                  <button onClick={() => toggleComments(post.id)}>
-                    <CommentsIcon />
-                    <span>{formatNumbers(post.num_comments)}</span>
-                  </button>
-                </div>
-
-                <div className={styles.postComments}>{visibleComments[post.id] && <Comments postId={post.id} />}</div>
-              </div>
-            </div>
-          );
-        })
-      )}
+    <div>
+      {posts.map((post) => (
+        <div key={post.id}>
+          <PostDetails post={post} />
+        </div>
+      ))}
     </div>
   );
 };

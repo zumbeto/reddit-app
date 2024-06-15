@@ -1,25 +1,17 @@
-import { useSelector } from 'react-redux';
-import { fetchComments } from '../../features/posts/postsSlice';
-import { RootState, useAppDispatch } from '../../store';
-import { CommentsProps } from '../../features/posts/types';
-import { useEffect } from 'react';
+import { Comment } from '../../features/posts/types';
 import styles from './PostComments.module.scss';
 import Loader from '../Loaders/Loader';
 
-const Comments = ({ postId }: CommentsProps) => {
-  const dispatch = useAppDispatch();
-  const comments = useSelector((state: RootState) => state.posts.comments[postId]);
+interface CommentsProps {
+  postId: string;
+  comments: Comment[];
+}
 
-  useEffect(() => {
-    if (!comments) {
-      dispatch(fetchComments(postId));
-    }
-  }, [dispatch, postId, comments]);
-
+const Comments = ({ comments }: CommentsProps) => {
   return (
     <ul className={styles.postComments}>
-      {!comments ? (
-        <Loader component={Comments as any} />
+      {comments.length === 0 ? (
+        <Loader component={Comments} />
       ) : (
         comments.map((comment) => (
           <li
