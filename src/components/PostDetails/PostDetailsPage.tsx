@@ -17,9 +17,11 @@ const PostDetailsPage = () => {
   const comments = useSelector((state: RootState) => selectComments(state, postId || ''));
   const [post, setPost] = useState<Post | null>(null);
   const [loading, setLoading] = useState(true);
+  const [showBackButton, setShowBackButton] = useState(false);
+  const [lastScrollTop, setLastScrollTop] = useState(0);
 
   useEffect(() => {
-    dispatch(setPreviousRoute(`/r/${subreddit}`)); // Set previous route when component mounts
+    dispatch(setPreviousRoute(`/r/${subreddit}`));
   }, [dispatch, subreddit]);
 
   useEffect(() => {
@@ -52,6 +54,25 @@ const PostDetailsPage = () => {
     }
   }, [dispatch, postId]);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+
+      if (scrollTop < lastScrollTop && lastScrollTop - scrollTop > 30) {
+        setShowBackButton(true);
+      } else if (scrollTop > lastScrollTop || scrollTop <= 200) {
+        setShowBackButton(false);
+      }
+
+      setLastScrollTop(scrollTop);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [lastScrollTop]);
+
   if (loading || status === 'loading') {
     return <Loader component={PostDetailsPage} />;
   }
@@ -65,6 +86,7 @@ const PostDetailsPage = () => {
       <PostDetails
         post={post}
         comments={comments}
+        showBackButton={showBackButton}
       />
     </div>
   );

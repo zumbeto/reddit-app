@@ -22,33 +22,14 @@ import {
   selectPreviousRoute,
 } from '../../features/navigation/navigationSlice';
 
-const PostDetails = ({ post, comments }: PostDetailsProps) => {
+const PostDetails = ({ post, comments, showBackButton }: PostDetailsProps) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const voteStatus = useSelector((state: RootState) => state.posts.voteStatus);
   const currentPostId = useSelector(selectCurrentPostId);
   const previousRoute = useSelector(selectPreviousRoute);
 
-  const [showBackButton, setShowBackButton] = useState(false);
-  const [lastScrollTop, setLastScrollTop] = useState(0);
   const [savedScrollPosition, setSavedScrollPosition] = useState(0);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = window.scrollY || document.documentElement.scrollTop;
-      if (scrollTop < lastScrollTop && scrollTop > 160) {
-        setShowBackButton(true);
-      } else if (scrollTop > lastScrollTop || scrollTop <= 160) {
-        setShowBackButton(false);
-      }
-      setLastScrollTop(scrollTop);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [lastScrollTop]);
 
   useEffect(() => {
     if (previousRoute) {
@@ -93,8 +74,8 @@ const PostDetails = ({ post, comments }: PostDetailsProps) => {
         key={post.id}
         className={styles.post}
       >
-        {showBackButton && currentPostId === post.id && (
-          <div className={styles.post__backBtnWrapper}>
+        {
+          <div className={`${styles.post__backBtnWrapper} ${showBackButton ? styles.visible : ''}`}>
             <Link
               to='../..'
               relative='path'
@@ -107,7 +88,7 @@ const PostDetails = ({ post, comments }: PostDetailsProps) => {
               Back
             </Link>
           </div>
-        )}
+        }
         <div className={styles.post__votes}>
           <button onClick={() => handleUpvote(post.id)}>
             <UpvoteArrow status={voteStatus[post.id]} />

@@ -40,4 +40,5 @@ export interface CommentsProps {
 export interface PostDetailsProps {
   post: Post;
   comments?: Comment[];
+  showBackButton?: boolean;
 }
