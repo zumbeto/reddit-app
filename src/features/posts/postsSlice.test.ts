@@ -17,6 +17,7 @@ const initialState: PostsState = {
   status: 'idle',
   error: null,
   comments: {},
+  voteStatus: {},
 };
 
 // Mock data for tests
@@ -31,6 +32,8 @@ const mockPost: Post = {
   url: 'url1',
   preview: undefined,
   num_comments: 5,
+  media: undefined,
+  subreddit: 'popular',
 };
 
 const mock = new MockAdapter(axios);
