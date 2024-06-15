@@ -14,6 +14,8 @@ const initialState: NavigationState = {
   query: '',
   shouldNavigate: false,
   subreddit: '',
+  currentPostId: null,
+  previousRoute: null,
 };
 
 describe('navigation reducer', () => {
@@ -49,12 +51,15 @@ describe('navigation selectors', () => {
       query: 'test query',
       shouldNavigate: true,
       subreddit: 'reactjs',
+      currentPostId: null,
+      previousRoute: null,
     },
     posts: {
       items: [],
       status: 'idle',
       error: null,
       comments: {},
+      voteStatus: {},
     },
     subreddits: {
       items: [],
