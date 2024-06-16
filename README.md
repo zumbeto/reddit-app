@@ -1,6 +1,6 @@
 # RedditXplore
 
-![previews](public/redditxplore-responsive.png)
+![previews](public/redditxplore-preview.png)
 
 ---
 
@@ -73,12 +73,19 @@ The project is complete and fully functional. Regular updates and improvements m
 ## Future Work
 
 1. **Local Storage**:
+
 - Save users' likes and dislikes in the browser's local storage.
+
 2. **Load More Posts Functionality**:
+
 - Implement a “Load More Posts” button to allow users to load additional posts beyond the initially fetched ones. This will enhance user experience by providing seamless access to more content without excessive initial loading times.
+
 3. **Load More Comments Button**:
+
 - Introduce a “Load More Comments” button to enable users to load additional comments beyond the initial batch. This feature aims to improve the usability of the application.
+
 4. **Video Sound Integration**:
+
 - Add functionality to enable sound on videos. This enhancement will provide a richer media experience.
 
 These future enhancements are aimed at improving the overall functionality and user experience of the application.
