@@ -18,7 +18,7 @@ const initialState: PostsState = {
   error: null,
   comments: {},
   voteStatus: {},
-  currentView: null,
+  currentView: 'popular',
 };
 
 const mockPost: Post = {

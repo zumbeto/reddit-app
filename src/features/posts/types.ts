@@ -9,7 +9,9 @@ export interface Post {
   url: string;
   preview?: { images: { source: { url: string }; resolutions: { url: string; width: number; height: number }[] }[] };
   num_comments: number;
-  media?: { reddit_video?: { fallback_url: string; height: number; width: number; dash_url: string } };
+  media?: {
+    reddit_video?: { fallback_url: string; height: number; width: number; dash_audio_url: string; dash_url: string };
+  };
   subreddit: string;
 }
 

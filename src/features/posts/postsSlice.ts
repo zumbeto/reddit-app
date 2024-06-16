@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { Post, PostsState, Comment } from './types';
+import { PostsState, Comment } from './types';
 import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from '../../store';
 
@@ -16,23 +16,30 @@ const initialState: PostsState = {
 export const fetchPosts = createAsyncThunk('posts/fetchPosts', async (_, { rejectWithValue }) => {
   try {
     const response = await axios.get('https://www.reddit.com/r/popular.json');
-    return response.data.data.children.map(
-      (child: any) =>
-        ({
-          id: child.data.id,
-          title: child.data.title,
-          author: child.data.author,
-          created_utc: child.data.created_utc,
-          ups: child.data.ups,
-          downs: child.data.downs,
-          thumbnail: child.data.thumbnail,
-          url: child.data.url,
-          preview: child.data.preview,
-          num_comments: child.data.num_comments,
-          media: child.data.media,
-          subreddit: child.data.subreddit,
-        } as Post)
-    );
+    return response.data.data.children.map((child: any) => {
+      const data = child.data;
+      const post = {
+        id: data.id,
+        title: data.title,
+        author: data.author,
+        created_utc: data.created_utc,
+        ups: data.ups,
+        downs: data.downs,
+        thumbnail: data.thumbnail,
+        url: data.url,
+        preview: data.preview,
+        num_comments: data.num_comments,
+        media: data.media,
+        subreddit: data.subreddit,
+      };
+      if (data.media && data.media.reddit_video) {
+        post.media.reddit_video.dash_audio_url = data.media.reddit_video.dash_url?.replace(
+          /\/DASH_[^\/]+/,
+          '/DASH_audio.mp4'
+        );
+      }
+      return post;
+    });
   } catch (error) {
     return rejectWithValue((error as any).response?.data || 'Fetch posts failed');
   }
@@ -43,23 +50,30 @@ export const fetchSubredditPosts = createAsyncThunk(
   async (subreddit: string, { rejectWithValue }) => {
     try {
       const response = await axios.get(`https://www.reddit.com/r/${subreddit}.json`);
-      return response.data.data.children.map(
-        (child: any) =>
-          ({
-            id: child.data.id,
-            title: child.data.title,
-            author: child.data.author,
-            created_utc: child.data.created_utc,
-            ups: child.data.ups,
-            downs: child.data.downs,
-            thumbnail: child.data.thumbnail,
-            url: child.data.url,
-            preview: child.data.preview,
-            num_comments: child.data.num_comments,
-            media: child.data.media,
-            subreddit: child.data.subreddit,
-          } as Post)
-      );
+      return response.data.data.children.map((child: any) => {
+        const data = child.data;
+        const post = {
+          id: data.id,
+          title: data.title,
+          author: data.author,
+          created_utc: data.created_utc,
+          ups: data.ups,
+          downs: data.downs,
+          thumbnail: data.thumbnail,
+          url: data.url,
+          preview: data.preview,
+          num_comments: data.num_comments,
+          media: data.media,
+          subreddit: data.subreddit,
+        };
+        if (data.media && data.media.reddit_video) {
+          post.media.reddit_video.dash_audio_url = data.media.reddit_video.dash_url?.replace(
+            /\/DASH_[^\/]+/,
+            '/DASH_audio.mp4'
+          );
+        }
+        return post;
+      });
     } catch (error) {
       return rejectWithValue((error as any).response?.data || 'Fetch subreddit posts failed');
     }
@@ -69,23 +83,30 @@ export const fetchSubredditPosts = createAsyncThunk(
 export const searchPosts = createAsyncThunk('posts/searchPosts', async (query: string, { rejectWithValue }) => {
   try {
     const response = await axios.get(`https://www.reddit.com/search.json?q=${query}`);
-    return response.data.data.children.map(
-      (child: any) =>
-        ({
-          id: child.data.id,
-          title: child.data.title,
-          author: child.data.author,
-          created_utc: child.data.created_utc,
-          ups: child.data.ups,
-          downs: child.data.downs,
-          thumbnail: child.data.thumbnail,
-          url: child.data.url,
-          preview: child.data.preview,
-          num_comments: child.data.num_comments,
-          media: child.data.media,
-          subreddit: child.data.subreddit,
-        } as Post)
-    );
+    return response.data.data.children.map((child: any) => {
+      const data = child.data;
+      const post = {
+        id: data.id,
+        title: data.title,
+        author: data.author,
+        created_utc: data.created_utc,
+        ups: data.ups,
+        downs: data.downs,
+        thumbnail: data.thumbnail,
+        url: data.url,
+        preview: data.preview,
+        num_comments: data.num_comments,
+        media: data.media,
+        subreddit: data.subreddit,
+      };
+      if (data.media && data.media.reddit_video) {
+        post.media.reddit_video.dash_audio_url = data.media.reddit_video.dash_url?.replace(
+          /\/DASH_[^\/]+/,
+          '/DASH_audio.mp4'
+        );
+      }
+      return post;
+    });
   } catch (error) {
     return rejectWithValue((error as any).response?.data || 'Search posts failed');
   }

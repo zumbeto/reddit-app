@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { upvote, downvote } from '../../features/posts/postsSlice';
 import { RootState, useAppDispatch } from '../../store';
@@ -21,6 +21,7 @@ import {
   setPreviousRoute,
   selectPreviousRoute,
 } from '../../features/navigation/navigationSlice';
+import dashjs from 'dashjs';
 
 const PostDetails = ({ post, comments, showBackButton, onBackButtonClick }: PostDetailsProps) => {
   const dispatch = useAppDispatch();
@@ -30,12 +31,42 @@ const PostDetails = ({ post, comments, showBackButton, onBackButtonClick }: Post
   const previousRoute = useSelector(selectPreviousRoute);
 
   const [savedScrollPosition, setSavedScrollPosition] = useState(0);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     if (previousRoute) {
       window.scrollTo(0, savedScrollPosition);
     }
   }, [previousRoute, savedScrollPosition]);
+
+  useEffect(() => {
+    let dashPlayer: dashjs.MediaPlayerClass | null = null;
+    if (post.media && post.media.reddit_video && videoRef.current) {
+      dashPlayer = dashjs.MediaPlayer().create();
+      dashPlayer.initialize(videoRef.current, post.media.reddit_video.dash_url, true);
+      dashPlayer.setAutoPlay(false);
+
+      const handleVisibilityChange = () => {
+        if (document.visibilityState === 'visible' && !videoRef.current?.paused) {
+          videoRef.current?.play();
+        }
+      };
+
+      document.addEventListener('visibilitychange', handleVisibilityChange);
+
+      videoRef.current.muted = true;
+      videoRef.current.play().catch((error) => {
+        console.warn('Initial play() attempt failed:', error);
+      });
+
+      return () => {
+        if (dashPlayer) {
+          dashPlayer.reset();
+        }
+        document.removeEventListener('visibilitychange', handleVisibilityChange);
+      };
+    }
+  }, [post.media]);
 
   const handleUpvote = (postId: string) => {
     dispatch(upvote(postId));
@@ -66,7 +97,7 @@ const PostDetails = ({ post, comments, showBackButton, onBackButtonClick }: Post
   }
 
   const imageUrl = post.preview?.images[0]?.source?.url.replace('&amp;', '&');
-  const videoUrl = post.media?.reddit_video?.fallback_url;
+  const videoUrl = post.media?.reddit_video?.dash_url;
 
   return (
     <div className={styles.container}>
@@ -74,18 +105,16 @@ const PostDetails = ({ post, comments, showBackButton, onBackButtonClick }: Post
         key={post.id}
         className={styles.post}
       >
-        {
-          <div className={`${styles.post__backBtnWrapper} ${showBackButton ? styles.visible : ''}`}>
-            <Link
-              to={previousRoute || '../../'}
-              relative='path'
-              className={styles.post__backBtn}
-              onClick={onBackButtonClick}
-            >
-              Back
-            </Link>
-          </div>
-        }
+        <div className={`${styles.post__backBtnWrapper} ${showBackButton ? styles.visible : ''}`}>
+          <Link
+            to={previousRoute || '../../'}
+            relative='path'
+            className={styles.post__backBtn}
+            onClick={onBackButtonClick}
+          >
+            Back
+          </Link>
+        </div>
         <div className={styles.post__votes}>
           <button onClick={() => handleUpvote(post.id)}>
             <UpvoteArrow status={voteStatus[post.id]} />
@@ -121,15 +150,11 @@ const PostDetails = ({ post, comments, showBackButton, onBackButtonClick }: Post
           {videoUrl && (
             <div className={styles.post__wrapper__videoContainer}>
               <video
+                ref={videoRef}
                 controls
                 preload='auto'
-              >
-                <source
-                  src={videoUrl}
-                  type='video/mp4'
-                />
-                Your browser does not support the video tag.
-              </video>
+                className={styles.dashPlayer}
+              />
             </div>
           )}
           <div className={styles.post__wrapper__details}>
