@@ -41,31 +41,60 @@ const PostDetails = ({ post, comments, showBackButton, onBackButtonClick }: Post
 
   useEffect(() => {
     let dashPlayer: dashjs.MediaPlayerClass | null = null;
-    if (post.media && post.media.reddit_video && videoRef.current) {
-      dashPlayer = dashjs.MediaPlayer().create();
-      dashPlayer.initialize(videoRef.current, post.media.reddit_video.dash_url, true);
-      dashPlayer.setAutoPlay(false);
+    let observer: IntersectionObserver | null = null;
 
-      const handleVisibilityChange = () => {
-        if (document.visibilityState === 'visible' && !videoRef.current?.paused) {
-          videoRef.current?.play();
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible' && !videoRef.current?.paused) {
+        videoRef.current?.play().catch((error) => console.warn('Visibility play() attempt failed:', error));
+      } else {
+        videoRef.current?.pause();
+      }
+    };
+
+    const handleIntersection = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          videoRef.current!.currentTime = 0;
+          videoRef.current?.play().catch((error) => console.warn('Intersection play() attempt failed:', error));
+        } else {
+          videoRef.current?.pause();
         }
-      };
-
-      document.addEventListener('visibilitychange', handleVisibilityChange);
-
-      videoRef.current.muted = true;
-      videoRef.current.play().catch((error) => {
-        console.warn('Initial play() attempt failed:', error);
       });
+    };
 
-      return () => {
-        if (dashPlayer) {
-          dashPlayer.reset();
-        }
-        document.removeEventListener('visibilitychange', handleVisibilityChange);
-      };
+    const setupPlayer = () => {
+      if (post.media && post.media.reddit_video && videoRef.current) {
+        dashPlayer = dashjs.MediaPlayer().create();
+        dashPlayer.initialize(videoRef.current, post.media.reddit_video.dash_url, true);
+        dashPlayer.setAutoPlay(false);
+
+        observer = new IntersectionObserver(handleIntersection, { threshold: 0.1 });
+        observer.observe(videoRef.current);
+
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+
+        videoRef.current.muted = true;
+        videoRef.current.addEventListener('canplay', () => {
+          videoRef.current?.play().catch((error) => {
+            console.warn('Initial play() attempt failed:', error);
+          });
+        });
+      }
+    };
+
+    if (post.media && post.media.reddit_video) {
+      setupPlayer();
     }
+
+    return () => {
+      if (dashPlayer) {
+        dashPlayer.reset();
+      }
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      if (observer && videoRef.current) {
+        observer.unobserve(videoRef.current);
+      }
+    };
   }, [post.media]);
 
   const handleUpvote = (postId: string) => {
@@ -153,6 +182,7 @@ const PostDetails = ({ post, comments, showBackButton, onBackButtonClick }: Post
                 ref={videoRef}
                 controls
                 preload='auto'
+                playsInline
                 className={styles.dashPlayer}
               />
             </div>
