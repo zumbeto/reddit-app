@@ -84,10 +84,6 @@ The project is complete and fully functional. Regular updates and improvements m
 
 - Introduce a “Load More Comments” button to enable users to load additional comments beyond the initial batch. This feature aims to improve the usability of the application.
 
-4. **Video Sound Integration**:
-
-- Add functionality to enable sound on videos. This enhancement will provide a richer media experience.
-
 These future enhancements are aimed at improving the overall functionality and user experience of the application.
 
 ## Contact
