@@ -4,4 +4,5 @@ export interface NavigationState {
   subreddit: string;
   currentPostId: string | null;
   previousRoute: string | null;
+  previousSearchQuery: string | null;
 }

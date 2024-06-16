@@ -30,6 +30,10 @@ const App = () => {
               path='r/:subreddit/post/:postId'
               element={<PostDetailsPage />}
             />
+            <Route
+              path='search/:query'
+              element={<PostList />}
+            />
           </Route>
         </Routes>
       </div>

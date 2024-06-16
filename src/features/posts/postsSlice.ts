@@ -10,6 +10,7 @@ const initialState: PostsState = {
   error: null,
   comments: {},
   voteStatus: {},
+  currentView: 'popular',
 };
 
 export const fetchPosts = createAsyncThunk('posts/fetchPosts', async (_, { rejectWithValue }) => {
@@ -146,6 +147,12 @@ const postsSlice = createSlice({
         }
       }
     },
+    setCurrentView: (state, action) => {
+      state.currentView = action.payload;
+    },
+    resetStatus: (state) => {
+      state.status = 'idle';
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -195,6 +202,6 @@ export const selectComments = createSelector(
   (comments) => comments || []
 );
 
-export const { upvote, downvote } = postsSlice.actions;
+export const { upvote, downvote, setCurrentView, resetStatus } = postsSlice.actions;
 
 export default postsSlice.reducer;

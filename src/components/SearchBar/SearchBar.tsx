@@ -2,17 +2,20 @@ import { useState } from 'react';
 import { useAppDispatch } from '../../store';
 import { searchPosts } from '../../features/posts/postsSlice';
 import { setQuery } from '../../features/navigation/navigationSlice';
+import { useNavigate } from 'react-router-dom';
 import styles from './SearchBar.module.scss';
 import SearchIcon from '../Icons/SearchIcon';
 
 const SearchBar = () => {
   const dispatch = useAppDispatch();
   const [localQuery, setLocalQuery] = useState('');
+  const navigate = useNavigate();
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     dispatch(setQuery(localQuery));
     dispatch(searchPosts(localQuery));
+    navigate(`/search/${encodeURIComponent(localQuery)}`);
   };
 
   return (

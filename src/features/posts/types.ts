@@ -27,6 +27,7 @@ export interface PostsState {
   error: string | null;
   comments: { [postId: string]: Comment[] };
   voteStatus: { [postId: string]: 'upvoted' | 'downvoted' | null };
+  currentView: string | null;
 }
 
 export interface VoteStatus {
@@ -40,4 +41,6 @@ export interface CommentsProps {
 export interface PostDetailsProps {
   post: Post;
   comments?: Comment[];
+  showBackButton?: boolean;
+  onBackButtonClick?: () => void;
 }
