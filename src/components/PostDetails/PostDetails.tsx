@@ -22,7 +22,7 @@ import {
   selectPreviousRoute,
 } from '../../features/navigation/navigationSlice';
 
-const PostDetails = ({ post, comments, showBackButton }: PostDetailsProps) => {
+const PostDetails = ({ post, comments, showBackButton, onBackButtonClick }: PostDetailsProps) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const voteStatus = useSelector((state: RootState) => state.posts.voteStatus);
@@ -77,13 +77,10 @@ const PostDetails = ({ post, comments, showBackButton }: PostDetailsProps) => {
         {
           <div className={`${styles.post__backBtnWrapper} ${showBackButton ? styles.visible : ''}`}>
             <Link
-              to='../..'
+              to={previousRoute || '../../'}
               relative='path'
               className={styles.post__backBtn}
-              onClick={() => {
-                dispatch(setCurrentPostId(null));
-                dispatch(setPreviousRoute(null));
-              }}
+              onClick={onBackButtonClick}
             >
               Back
             </Link>

@@ -18,9 +18,9 @@ const initialState: PostsState = {
   error: null,
   comments: {},
   voteStatus: {},
+  currentView: null,
 };
 
-// Mock data for tests
 const mockPost: Post = {
   id: '1',
   title: 'Post 1',

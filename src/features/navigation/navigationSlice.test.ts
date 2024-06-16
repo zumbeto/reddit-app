@@ -16,6 +16,7 @@ const initialState: NavigationState = {
   subreddit: '',
   currentPostId: null,
   previousRoute: null,
+  previousSearchQuery: null,
 };
 
 describe('navigation reducer', () => {
@@ -53,6 +54,7 @@ describe('navigation selectors', () => {
       subreddit: 'reactjs',
       currentPostId: null,
       previousRoute: null,
+      previousSearchQuery: null,
     },
     posts: {
       items: [],
@@ -60,6 +62,7 @@ describe('navigation selectors', () => {
       error: null,
       comments: {},
       voteStatus: {},
+      currentView: null,
     },
     subreddits: {
       items: [],

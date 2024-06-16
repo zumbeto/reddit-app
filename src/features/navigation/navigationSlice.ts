@@ -8,6 +8,7 @@ const initialState: NavigationState = {
   subreddit: '',
   currentPostId: null,
   previousRoute: null,
+  previousSearchQuery: null,
 };
 
 const navigationSlice = createSlice({
@@ -33,16 +34,27 @@ const navigationSlice = createSlice({
     setPreviousRoute(state, action: PayloadAction<string | null>) {
       state.previousRoute = action.payload;
     },
+    setPreviousSearchQuery(state, action: PayloadAction<string | null>) {
+      state.previousSearchQuery = action.payload;
+    },
   },
 });
 
-export const { setQuery, clearQuery, resetNavigation, setSubreddit, setCurrentPostId, setPreviousRoute } =
-  navigationSlice.actions;
+export const {
+  setQuery,
+  clearQuery,
+  resetNavigation,
+  setSubreddit,
+  setCurrentPostId,
+  setPreviousRoute,
+  setPreviousSearchQuery,
+} = navigationSlice.actions;
 
 export const selectQuery = (state: RootState) => state.navigation.query;
 export const selectShouldNavigate = (state: RootState) => state.navigation.shouldNavigate;
 export const selectSubreddit = (state: RootState) => state.navigation.subreddit;
 export const selectCurrentPostId = (state: RootState) => state.navigation.currentPostId;
 export const selectPreviousRoute = (state: RootState) => state.navigation.previousRoute;
+export const selectPreviousSearchQuery = (state: RootState) => state.navigation.previousSearchQuery;
 
 export default navigationSlice.reducer;
