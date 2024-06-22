@@ -113,6 +113,7 @@ const PostDetailsPage = () => {
           comments={comments}
           showBackButton={showBackButton}
           onBackButtonClick={handleBackButtonClick}
+          onCommentsIconClick={handleBackButtonClick}
         />
       </div>
     </div>

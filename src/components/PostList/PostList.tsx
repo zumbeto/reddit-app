@@ -11,7 +11,7 @@ import { RootState, useAppDispatch } from '../../store';
 import PostDetails from '../PostDetails/PostDetails';
 import Loader from '../Loaders/Loader';
 import NoResults from '../NoResults/NoResults';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import styles from './PostList.module.scss';
 
 const PostList = () => {
@@ -57,12 +57,10 @@ const PostList = () => {
     <div style={{ overflow: 'hidden' }}>
       <div className={styles.container}>
         {posts.map((post) => (
-          <Link
-            to={`/r/${post.subreddit}/post/${post.id}`}
+          <PostDetails
+            post={post}
             key={post.id}
-          >
-            <PostDetails post={post} />
-          </Link>
+          />
         ))}
       </div>
     </div>

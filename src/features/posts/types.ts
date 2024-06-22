@@ -45,4 +45,5 @@ export interface PostDetailsProps {
   comments?: Comment[];
   showBackButton?: boolean;
   onBackButtonClick?: () => void;
+  onCommentsIconClick?: () => void;
 }
