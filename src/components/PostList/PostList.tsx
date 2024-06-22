@@ -12,6 +12,7 @@ import PostDetails from '../PostDetails/PostDetails';
 import Loader from '../Loaders/Loader';
 import NoResults from '../NoResults/NoResults';
 import { useParams } from 'react-router-dom';
+import styles from './PostList.module.scss';
 
 const PostList = () => {
   const { subreddit, query } = useParams<{ subreddit?: string; query?: string }>();
@@ -22,6 +23,8 @@ const PostList = () => {
   const currentView = useSelector((state: RootState) => state.posts.currentView);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+
     if (!query && !subreddit && currentView === 'popular' && posts.length === 0) {
       dispatch(fetchPosts());
     } else if (!query && !subreddit && currentView !== 'popular') {
@@ -51,7 +54,7 @@ const PostList = () => {
   }
 
   return (
-    <div>
+    <div className={styles.container}>
       {posts.map((post) => (
         <div key={post.id}>
           <PostDetails post={post} />
