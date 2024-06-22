@@ -54,12 +54,14 @@ const PostList = () => {
   }
 
   return (
-    <div className={styles.container}>
-      {posts.map((post) => (
-        <div key={post.id}>
-          <PostDetails post={post} />
-        </div>
-      ))}
+    <div style={{ overflow: 'hidden' }}>
+      <div className={styles.container}>
+        {posts.map((post) => (
+          <div key={post.id}>
+            <PostDetails post={post} />
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

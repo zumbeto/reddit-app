@@ -106,13 +106,15 @@ const PostDetailsPage = () => {
   }
 
   return (
-    <div className={styles.container}>
-      <PostDetails
-        post={post}
-        comments={comments}
-        showBackButton={showBackButton}
-        onBackButtonClick={handleBackButtonClick}
-      />
+    <div style={{ overflow: 'hidden' }}>
+      <div className={styles.container}>
+        <PostDetails
+          post={post}
+          comments={comments}
+          showBackButton={showBackButton}
+          onBackButtonClick={handleBackButtonClick}
+        />
+      </div>
     </div>
   );
 };
