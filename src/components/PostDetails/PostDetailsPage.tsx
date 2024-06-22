@@ -30,7 +30,7 @@ const PostDetailsPage = () => {
   const previousSearchQuery = useSelector(selectPreviousSearchQuery);
   const [post, setPost] = useState<Post | null>(null);
   const [loading, setLoading] = useState(true);
-  const [showBackButton, setShowBackButton] = useState(false);
+  const [showBackButton, setShowBackButton] = useState(true);
   const [lastScrollTop, setLastScrollTop] = useState(0);
 
   useEffect(() => {

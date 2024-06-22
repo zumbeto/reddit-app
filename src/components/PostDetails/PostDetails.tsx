@@ -117,66 +117,71 @@ const PostDetails = ({ post, comments, showBackButton, onBackButtonClick, onComm
           Back
         </Link>
       </div>
-      <div className={styles.post__votes}>
-        <button onClick={() => handleUpvote(post.id)}>
-          <UpvoteArrow status={voteStatus[post.id]} />
-        </button>
-        <p
-          className={
-            voteStatus[post.id] === 'upvoted' ? styles.like : voteStatus[post.id] === 'downvoted' ? styles.dislike : ''
-          }
-        >
-          {formatNumbers(post.ups - post.downs)}
-        </p>
-        <button onClick={() => handleDownvote(post.id)}>
-          <DownvoteArrow status={voteStatus[post.id]} />
-        </button>
-      </div>
-      <Link
-        to={`/r/${post.subreddit}/post/${post.id}`}
-        className={styles.post__wrapper}
-      >
-        <div className={styles.post__wrapper__title}>
-          <h2>{post.title}</h2>
-        </div>
-        {imageUrl && !videoUrl && (
-          <div className={styles.post__wrapper__imageContainer}>
-            <img
-              src={imageUrl}
-              alt={post.title}
-              className={styles.post__wrapper__imageContainer__image}
-            />
-          </div>
-        )}
-        {videoUrl && (
-          <div className={styles.post__wrapper__videoContainer}>
-            <video
-              ref={videoRef}
-              controls
-              preload='auto'
-              playsInline
-              className={styles.dashPlayer}
-            />
-          </div>
-        )}
-        <div className={styles.post__wrapper__details}>
-          <p className={styles.post__wrapper__details__author}>{post.author}</p>
-          <p className={styles.post__wrapper__details__timeAgo}>{timeAgo(post.created_utc)}</p>
-          <button onClick={onCommentsIconClick}>
-            <CommentsIcon />
-            <span>{formatNumbers(post.num_comments)}</span>
+      <div className={styles.post__contentWrapper}>
+        <div className={styles.post__votes}>
+          <button onClick={() => handleUpvote(post.id)}>
+            <UpvoteArrow status={voteStatus[post.id]} />
+          </button>
+          <p
+            className={
+              voteStatus[post.id] === 'upvoted'
+                ? styles.like
+                : voteStatus[post.id] === 'downvoted'
+                ? styles.dislike
+                : ''
+            }
+          >
+            {formatNumbers(post.ups - post.downs)}
+          </p>
+          <button onClick={() => handleDownvote(post.id)}>
+            <DownvoteArrow status={voteStatus[post.id]} />
           </button>
         </div>
-
-        {comments && (
-          <div className={styles.postComments}>
-            <PostComments
-              postId={post.id}
-              comments={comments}
-            />
+        <Link
+          to={`/r/${post.subreddit}/post/${post.id}`}
+          className={styles.post__wrapper}
+        >
+          <div className={styles.post__wrapper__title}>
+            <h2>{post.title}</h2>
           </div>
-        )}
-      </Link>
+          {imageUrl && !videoUrl && (
+            <div className={styles.post__wrapper__imageContainer}>
+              <img
+                src={imageUrl}
+                alt={post.title}
+                className={styles.post__wrapper__imageContainer__image}
+              />
+            </div>
+          )}
+          {videoUrl && (
+            <div className={styles.post__wrapper__videoContainer}>
+              <video
+                ref={videoRef}
+                controls
+                preload='auto'
+                playsInline
+                className={styles.dashPlayer}
+              />
+            </div>
+          )}
+          <div className={styles.post__wrapper__details}>
+            <p className={styles.post__wrapper__details__author}>{post.author}</p>
+            <p className={styles.post__wrapper__details__timeAgo}>{timeAgo(post.created_utc)}</p>
+            <button onClick={onCommentsIconClick}>
+              <CommentsIcon />
+              <span>{formatNumbers(post.num_comments)}</span>
+            </button>
+          </div>
+        </Link>
+      </div>
+      {comments && (
+        <div className={styles.postComments}>
+          <PostComments
+            postId={post.id}
+            comments={comments}
+          />
+        </div>
+      )}
     </div>
   );
 };

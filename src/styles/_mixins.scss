@@ -32,7 +32,7 @@ $breakpoints: (
     top: 2.5rem;
 
     @include breakpoint-max('md') {
-      top: 12.5rem;
+      top: 13.5rem;
     }
 
     @include breakpoint('lg') {

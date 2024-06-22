@@ -7,6 +7,7 @@
   transition: box-shadow 0.2s;
   list-style: none;
   display: flex;
+  flex-direction: column;
   gap: 2rem;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   background-color: $background-color-2;
@@ -33,6 +34,14 @@
     background-color: transparent;
     border: none;
     cursor: pointer;
+  }
+
+  &__contentWrapper {
+    display: flex;
+
+    @include m.breakpoint-max('sm') {
+      flex-direction: column;
+    }
   }
 
   &__votes {
