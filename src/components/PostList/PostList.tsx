@@ -11,7 +11,7 @@ import { RootState, useAppDispatch } from '../../store';
 import PostDetails from '../PostDetails/PostDetails';
 import Loader from '../Loaders/Loader';
 import NoResults from '../NoResults/NoResults';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import styles from './PostList.module.scss';
 
 const PostList = () => {
