@@ -95,6 +95,10 @@ const PostDetails = ({ post, comments, showBackButton, onBackButtonClick, onComm
     dispatch(downvote(postId));
   };
 
+  const handleVideoMouseDown = (event: React.MouseEvent<HTMLVideoElement>) => {
+    event.preventDefault();
+  };
+
   if (!post) {
     return <NoResults />;
   }
@@ -161,6 +165,7 @@ const PostDetails = ({ post, comments, showBackButton, onBackButtonClick, onComm
                 preload='auto'
                 playsInline
                 className={styles.dashPlayer}
+                onMouseDown={handleVideoMouseDown} // Add this line
               />
             </div>
           )}
