@@ -12,6 +12,7 @@ import PostDetails from '../PostDetails/PostDetails';
 import Loader from '../Loaders/Loader';
 import NoResults from '../NoResults/NoResults';
 import { useParams } from 'react-router-dom';
+import styles from './PostList.module.scss';
 
 const PostList = () => {
   const { subreddit, query } = useParams<{ subreddit?: string; query?: string }>();
@@ -51,7 +52,7 @@ const PostList = () => {
   }
 
   return (
-    <div>
+    <div className={styles.container}>
       {posts.map((post) => (
         <div key={post.id}>
           <PostDetails post={post} />

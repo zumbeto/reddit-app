@@ -105,14 +105,12 @@ const PostDetailsPage = () => {
   }
 
   return (
-    <div>
-      <PostDetails
-        post={post}
-        comments={comments}
-        showBackButton={showBackButton}
-        onBackButtonClick={handleBackButtonClick}
-      />
-    </div>
+    <PostDetails
+      post={post}
+      comments={comments}
+      showBackButton={showBackButton}
+      onBackButtonClick={handleBackButtonClick}
+    />
   );
 };
 

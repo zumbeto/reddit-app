@@ -6,7 +6,6 @@
   padding: 0.5rem;
   width: 100%;
   background-color: $background-color-2;
-  margin-bottom: 1rem;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   border-bottom: 1px solid $dark-color;
   display: grid;
@@ -14,7 +13,7 @@
   grid-template-columns: 1fr 1fr 1fr;
   align-content: center;
   gap: 1rem;
-  position: fixed;
+  position: sticky;
   top: 0;
   left: 0;
   z-index: 100;
