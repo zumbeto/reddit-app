@@ -3,14 +3,21 @@
 
 .noResults {
   text-align: center;
-  color: $danger-color;
+  color: #dc3545;
   font-size: 1.3rem;
   width: 100%;
-  position: absolute;
-  top: 6.5rem;
+  height: 100%;
+  position: relative;
 
-  @include m.breakpoint-max('sm') {
-    top: 30rem;
+  @include m.breakpoint-max('md') {
+    top: 10rem;
+  }
+
+  &__box {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 50%);
   }
 
   & .backBtn {
