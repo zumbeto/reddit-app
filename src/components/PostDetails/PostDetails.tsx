@@ -95,10 +95,6 @@ const PostDetails = ({ post, comments, showBackButton, onBackButtonClick, onComm
     dispatch(downvote(postId));
   };
 
-  const handleVideoMouseDown = (event: React.MouseEvent<HTMLVideoElement>) => {
-    event.preventDefault();
-  };
-
   if (!post) {
     return <NoResults />;
   }
@@ -141,21 +137,24 @@ const PostDetails = ({ post, comments, showBackButton, onBackButtonClick, onComm
             <DownvoteArrow status={voteStatus[post.id]} />
           </button>
         </div>
-        <Link
-          to={`/r/${post.subreddit}/post/${post.id}`}
-          className={styles.post__wrapper}
-        >
-          <div className={styles.post__wrapper__title}>
+        <div className={styles.post__wrapper}>
+          <Link
+            to={`/r/${post.subreddit}/post/${post.id}`}
+            className={styles.post__wrapper__title}
+          >
             <h2>{post.title}</h2>
-          </div>
+          </Link>
           {imageUrl && !videoUrl && (
-            <div className={styles.post__wrapper__imageContainer}>
+            <Link
+              to={`/r/${post.subreddit}/post/${post.id}`}
+              className={styles.post__wrapper__imageContainer}
+            >
               <img
                 src={imageUrl}
                 alt={post.title}
                 className={styles.post__wrapper__imageContainer__image}
               />
-            </div>
+            </Link>
           )}
           {videoUrl && (
             <div className={styles.post__wrapper__videoContainer}>
@@ -165,19 +164,21 @@ const PostDetails = ({ post, comments, showBackButton, onBackButtonClick, onComm
                 preload='auto'
                 playsInline
                 className={styles.dashPlayer}
-                onMouseDown={handleVideoMouseDown} // Add this line
               />
             </div>
           )}
-          <div className={styles.post__wrapper__details}>
+          <Link
+            to={`/r/${post.subreddit}/post/${post.id}`}
+            className={styles.post__wrapper__details}
+          >
             <p className={styles.post__wrapper__details__author}>{post.author}</p>
             <p className={styles.post__wrapper__details__timeAgo}>{timeAgo(post.created_utc)}</p>
             <button onClick={onCommentsIconClick}>
               <CommentsIcon />
               <span>{formatNumbers(post.num_comments)}</span>
             </button>
-          </div>
-        </Link>
+          </Link>
+        </div>
       </div>
       {comments && (
         <div className={styles.postComments}>
