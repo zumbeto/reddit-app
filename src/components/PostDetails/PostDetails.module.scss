@@ -172,7 +172,7 @@
 
     @include m.breakpoint-max('xl') {
       top: 5.6rem;
-      left: 27rem;
+      left: 26.5rem;
     }
 
     @include m.breakpoint-max('md') {
@@ -184,8 +184,11 @@
       display: flex;
       justify-content: center;
       top: 5.6rem;
+      left: -16.8rem;
+    }
+
+    @include m.breakpoint('mlg') {
       background-color: transparent;
-      left: -16rem;
     }
   }
 
