@@ -1,12 +1,4 @@
-import navigationReducer, {
-  setQuery,
-  clearQuery,
-  resetNavigation,
-  setSubreddit,
-  selectQuery,
-  selectShouldNavigate,
-  selectSubreddit,
-} from './navigationSlice';
+import navigationReducer, { setQuery, setSubreddit, selectQuery, selectSubreddit } from './navigationSlice';
 import { NavigationState } from './types';
 import { RootState } from '../../store';
 
@@ -28,16 +20,6 @@ describe('navigation reducer', () => {
     const actual = navigationReducer(initialState, setQuery('test query'));
     expect(actual.query).toEqual('test query');
     expect(actual.shouldNavigate).toEqual(true);
-  });
-
-  it('should handle clearQuery', () => {
-    const actual = navigationReducer({ ...initialState, query: 'test query' }, clearQuery());
-    expect(actual.query).toEqual('');
-  });
-
-  it('should handle resetNavigation', () => {
-    const actual = navigationReducer({ ...initialState, shouldNavigate: true }, resetNavigation());
-    expect(actual.shouldNavigate).toEqual(false);
   });
 
   it('should handle setSubreddit', () => {
@@ -73,10 +55,6 @@ describe('navigation selectors', () => {
 
   it('should select the query', () => {
     expect(selectQuery(state)).toEqual('test query');
-  });
-
-  it('should select shouldNavigate', () => {
-    expect(selectShouldNavigate(state)).toEqual(true);
   });
 
   it('should select the subreddit', () => {

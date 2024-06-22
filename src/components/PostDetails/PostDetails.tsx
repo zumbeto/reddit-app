@@ -9,28 +9,18 @@ import DownvoteArrow from '../Icons/Downvote';
 import PostComments from '../PostComments/PostComments';
 import CommentsIcon from '../Icons/CommentsIcon';
 import styles from './PostDetails.module.scss';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import NoResults from '../NoResults/NoResults';
 import { PostDetailsProps } from '../../features/posts/types';
-import {
-  setQuery,
-  setSubreddit,
-  resetNavigation,
-  setCurrentPostId,
-  selectCurrentPostId,
-  setPreviousRoute,
-  selectPreviousRoute,
-} from '../../features/navigation/navigationSlice';
+import { selectPreviousRoute } from '../../features/navigation/navigationSlice';
 import dashjs from 'dashjs';
 
 const PostDetails = ({ post, comments, showBackButton, onBackButtonClick }: PostDetailsProps) => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const voteStatus = useSelector((state: RootState) => state.posts.voteStatus);
-  const currentPostId = useSelector(selectCurrentPostId);
   const previousRoute = useSelector(selectPreviousRoute);
 
-  const [savedScrollPosition, setSavedScrollPosition] = useState(0);
+  const [savedScrollPosition] = useState(0);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -105,22 +95,6 @@ const PostDetails = ({ post, comments, showBackButton, onBackButtonClick }: Post
     dispatch(downvote(postId));
   };
 
-  const navigateToComments = (postId: string, subreddit: string) => {
-    if (currentPostId === postId) {
-      dispatch(setCurrentPostId(null));
-      dispatch(setPreviousRoute(null));
-      navigate(`/r/${subreddit}`);
-    } else {
-      dispatch(setQuery(''));
-      dispatch(setSubreddit(subreddit));
-      dispatch(setCurrentPostId(postId));
-      dispatch(setPreviousRoute(window.location.pathname));
-      setSavedScrollPosition(window.scrollY || document.documentElement.scrollTop);
-      navigate(`/r/${subreddit}/post/${postId}`);
-      dispatch(resetNavigation());
-    }
-  };
-
   if (!post) {
     return <NoResults />;
   }
@@ -185,7 +159,7 @@ const PostDetails = ({ post, comments, showBackButton, onBackButtonClick }: Post
         <div className={styles.post__wrapper__details}>
           <p className={styles.post__wrapper__details__author}>{post.author}</p>
           <p className={styles.post__wrapper__details__timeAgo}>{timeAgo(post.created_utc)}</p>
-          <button onClick={() => navigateToComments(post.id, post.subreddit)}>
+          <button>
             <CommentsIcon />
             <span>{formatNumbers(post.num_comments)}</span>
           </button>
