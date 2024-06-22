@@ -57,12 +57,10 @@ const PostList = () => {
     <div style={{ overflow: 'hidden' }}>
       <div className={styles.container}>
         {posts.map((post) => (
-          <Link
-            to={`/r/${post.subreddit}/post/${post.id}`}
+          <PostDetails
+            post={post}
             key={post.id}
-          >
-            <PostDetails post={post} />
-          </Link>
+          />
         ))}
       </div>
     </div>

@@ -15,7 +15,7 @@ import { PostDetailsProps } from '../../features/posts/types';
 import { selectPreviousRoute } from '../../features/navigation/navigationSlice';
 import dashjs from 'dashjs';
 
-const PostDetails = ({ post, comments, showBackButton, onBackButtonClick }: PostDetailsProps) => {
+const PostDetails = ({ post, comments, showBackButton, onBackButtonClick, onCommentsIconClick }: PostDetailsProps) => {
   const dispatch = useAppDispatch();
   const voteStatus = useSelector((state: RootState) => state.posts.voteStatus);
   const previousRoute = useSelector(selectPreviousRoute);
@@ -132,7 +132,10 @@ const PostDetails = ({ post, comments, showBackButton, onBackButtonClick }: Post
           <DownvoteArrow status={voteStatus[post.id]} />
         </button>
       </div>
-      <div className={styles.post__wrapper}>
+      <Link
+        to={`/r/${post.subreddit}/post/${post.id}`}
+        className={styles.post__wrapper}
+      >
         <div className={styles.post__wrapper__title}>
           <h2>{post.title}</h2>
         </div>
@@ -159,7 +162,7 @@ const PostDetails = ({ post, comments, showBackButton, onBackButtonClick }: Post
         <div className={styles.post__wrapper__details}>
           <p className={styles.post__wrapper__details__author}>{post.author}</p>
           <p className={styles.post__wrapper__details__timeAgo}>{timeAgo(post.created_utc)}</p>
-          <button>
+          <button onClick={onCommentsIconClick}>
             <CommentsIcon />
             <span>{formatNumbers(post.num_comments)}</span>
           </button>
@@ -173,7 +176,7 @@ const PostDetails = ({ post, comments, showBackButton, onBackButtonClick }: Post
             />
           </div>
         )}
-      </div>
+      </Link>
     </div>
   );
 };
