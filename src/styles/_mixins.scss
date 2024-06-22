@@ -20,3 +20,24 @@ $breakpoints: (
     @content;
   }
 }
+
+@mixin container {
+  .container {
+    display: flex;
+    flex-direction: column;
+    margin-inline: auto;
+    padding: 0 1rem;
+    gap: 1.5rem;
+    position: relative;
+    top: 2.5rem;
+
+    @include breakpoint-max('md') {
+      top: 12.5rem;
+    }
+
+    @include breakpoint('lg') {
+      max-width: calc(100vw - 27rem);
+      width: 65rem;
+    }
+  }
+}

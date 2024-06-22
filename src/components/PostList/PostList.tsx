@@ -23,6 +23,8 @@ const PostList = () => {
   const currentView = useSelector((state: RootState) => state.posts.currentView);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+
     if (!query && !subreddit && currentView === 'popular' && posts.length === 0) {
       dispatch(fetchPosts());
     } else if (!query && !subreddit && currentView !== 'popular') {

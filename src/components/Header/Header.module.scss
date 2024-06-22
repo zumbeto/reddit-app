@@ -18,6 +18,10 @@
   left: 0;
   z-index: 100;
 
+  @include m.breakpoint-max('md') {
+    position: fixed;
+  }
+
   @include m.breakpoint-max('sm') {
     display: flex;
     justify-content: center;

@@ -18,6 +18,7 @@ import {
   setPreviousRoute,
   selectPreviousSearchQuery,
 } from '../../features/navigation/navigationSlice';
+import styles from './PostDetailsPage.module.scss';
 
 const PostDetailsPage = () => {
   const { postId, subreddit } = useParams<{ postId: string; subreddit: string }>();
@@ -105,12 +106,14 @@ const PostDetailsPage = () => {
   }
 
   return (
-    <PostDetails
-      post={post}
-      comments={comments}
-      showBackButton={showBackButton}
-      onBackButtonClick={handleBackButtonClick}
-    />
+    <div className={styles.container}>
+      <PostDetails
+        post={post}
+        comments={comments}
+        showBackButton={showBackButton}
+        onBackButtonClick={handleBackButtonClick}
+      />
+    </div>
   );
 };
 
