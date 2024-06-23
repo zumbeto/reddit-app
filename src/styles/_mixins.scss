@@ -31,7 +31,7 @@ $breakpoints: (
     position: relative;
 
     @include breakpoint-max('md') {
-      margin-top: 13.5rem;
+      margin-top: 13rem;
     }
 
     @include breakpoint('lg') {
