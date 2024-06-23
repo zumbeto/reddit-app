@@ -232,9 +232,12 @@
     color: $text-color;
     font-size: 0.9rem;
     padding: 0.1rem 0.8rem;
-    margin-left: 1rem;
     border-radius: 5rem;
     transition: all 0.3s;
+
+    @include m.breakpoint-max('md') {
+      margin-left: 1rem;
+    }
 
     &:hover {
       background-color: $primary-color-hover;
