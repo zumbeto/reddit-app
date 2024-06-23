@@ -25,14 +25,13 @@ $breakpoints: (
   .container {
     display: flex;
     flex-direction: column;
-    margin-inline: auto;
+    margin: 2.5rem auto;
     padding: 0 1rem;
     gap: 1.5rem;
     position: relative;
-    top: 2.5rem;
 
     @include breakpoint-max('md') {
-      top: 13.5rem;
+      margin-top: 13.5rem;
     }
 
     @include breakpoint('lg') {
