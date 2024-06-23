@@ -23,15 +23,25 @@
     color: $primary-color;
     display: flex;
     justify-content: space-between;
+    gap: 0.5rem;
     padding: 0 1rem 1rem 1rem;
     text-decoration: underline;
     text-underline-offset: 0.3rem;
     text-decoration-color: $dark-color;
 
+    @include m.breakpoint-max('sm') {
+      flex-wrap: wrap;
+      padding: 0 0.5rem 1rem 0.5rem;
+    }
+
     & span {
       font-weight: 400;
       color: $secondary-color;
       margin-left: 1rem;
+
+      @include m.breakpoint-max('sm') {
+        margin-left: 0;
+      }
     }
   }
 
