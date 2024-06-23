@@ -117,47 +117,38 @@ const PostDetails = ({ post, comments, showBackButton, onBackButtonClick, onComm
           Back
         </Link>
       </div>
+      <Link
+        to={`/r/${post.subreddit}/post/${post.id}`}
+        className={styles.post__info}
+      >
+        <p className={styles.post__info__author}>{post.author}</p>
+        <p className={styles.post__info__timeAgo}>
+          <span>&#x2022;</span>
+          {timeAgo(post.created_utc)}
+        </p>
+      </Link>
       <div className={styles.post__contentWrapper}>
-        <div className={styles.post__votes}>
-          <button onClick={() => handleUpvote(post.id)}>
-            <UpvoteArrow status={voteStatus[post.id]} />
-          </button>
-          <p
-            className={
-              voteStatus[post.id] === 'upvoted'
-                ? styles.like
-                : voteStatus[post.id] === 'downvoted'
-                ? styles.dislike
-                : ''
-            }
-          >
-            {formatNumbers(post.ups - post.downs)}
-          </p>
-          <button onClick={() => handleDownvote(post.id)}>
-            <DownvoteArrow status={voteStatus[post.id]} />
-          </button>
-        </div>
-        <div className={styles.post__wrapper}>
+        <div className={styles.post__content}>
           <Link
             to={`/r/${post.subreddit}/post/${post.id}`}
-            className={styles.post__wrapper__title}
+            className={styles.post__content__title}
           >
             <h2>{post.title}</h2>
           </Link>
           {imageUrl && !videoUrl && (
             <Link
               to={`/r/${post.subreddit}/post/${post.id}`}
-              className={styles.post__wrapper__imageContainer}
+              className={styles.post__content__imageContainer}
             >
               <img
                 src={imageUrl}
                 alt={post.title}
-                className={styles.post__wrapper__imageContainer__image}
+                className={styles.post__content__imageContainer__image}
               />
             </Link>
           )}
           {videoUrl && (
-            <div className={styles.post__wrapper__videoContainer}>
+            <div className={styles.post__content__videoContainer}>
               <video
                 ref={videoRef}
                 controls
@@ -167,17 +158,35 @@ const PostDetails = ({ post, comments, showBackButton, onBackButtonClick, onComm
               />
             </div>
           )}
-          <Link
-            to={`/r/${post.subreddit}/post/${post.id}`}
-            className={styles.post__wrapper__details}
-          >
-            <p className={styles.post__wrapper__details__author}>{post.author}</p>
-            <p className={styles.post__wrapper__details__timeAgo}>{timeAgo(post.created_utc)}</p>
-            <button onClick={onCommentsIconClick}>
+          <div className={styles.post__content__details}>
+            <div className={styles.post__content__votes}>
+              <button onClick={() => handleUpvote(post.id)}>
+                <UpvoteArrow status={voteStatus[post.id]} />
+              </button>
+              <p
+                className={
+                  voteStatus[post.id] === 'upvoted'
+                    ? styles.like
+                    : voteStatus[post.id] === 'downvoted'
+                    ? styles.dislike
+                    : ''
+                }
+              >
+                {formatNumbers(post.ups - post.downs)}
+              </p>
+              <button onClick={() => handleDownvote(post.id)}>
+                <DownvoteArrow status={voteStatus[post.id]} />
+              </button>
+            </div>
+            <Link
+              to={`/r/${post.subreddit}/post/${post.id}`}
+              className={styles.post__content__details__commentsIcon}
+              onClick={onCommentsIconClick}
+            >
               <CommentsIcon />
               <span>{formatNumbers(post.num_comments)}</span>
-            </button>
-          </Link>
+            </Link>
+          </div>
         </div>
       </div>
       {comments && (

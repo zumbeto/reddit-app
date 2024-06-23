@@ -17,3 +17,10 @@ a {
   text-decoration: none;
   color: inherit;
 }
+
+button {
+  display: flex;
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+}
