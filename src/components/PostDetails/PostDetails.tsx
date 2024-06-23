@@ -121,11 +121,13 @@ const PostDetails = ({ post, comments, showBackButton, onBackButtonClick, onComm
         to={`/r/${post.subreddit}/post/${post.id}`}
         className={styles.post__info}
       >
-        <p className={styles.post__info__author}>{post.author}</p>
-        <p className={styles.post__info__timeAgo}>
-          <span>&#x2022;</span>
-          {timeAgo(post.created_utc)}
-        </p>
+        <div className={styles.post__info__box}>
+          <p className={styles.post__info__author}>{post.author}</p>
+          <p className={styles.post__info__timeAgo}>
+            <span>&#x2022;</span>
+            {timeAgo(post.created_utc)}
+          </p>
+        </div>
       </Link>
       <div className={styles.post__contentWrapper}>
         <div className={styles.post__content}>
