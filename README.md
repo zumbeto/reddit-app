@@ -23,7 +23,7 @@ RedditXplore is an intuitive web application that allows users to browse and sea
 
 ## Live Version
 
-The live version of the application can be accessed here: [https://redditxplore.netlify.app](#).
+The live version of the application can be accessed here: [RedditXplore](https://redditxplore.netlify.app/).
 
 Note: You do not need to log in to your Reddit account to interact with the posts. You can like and dislike posts, but these interactions will reset upon reloading the browser as the app does not send POST requests to Reddit and only fetches data from their API.
 
